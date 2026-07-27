@@ -1,4 +1,4 @@
-const CLIENT_ID = "709fa152";
+const CLIENT_ID = "3e916e6d";
 const API = "https://api.jamendo.com/v3.0/tracks/";
 
 const searchInput = document.getElementById("searchInput");
