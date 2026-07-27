@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "https://saavn.sumit.co/api/$1"
+    }
+  ]
+}
