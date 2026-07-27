@@ -1,5 +1,5 @@
 
-const API_BASE = 'https://saavn.sumit.co/api';
+const API_BASE = 'https://jiosaavn-api-sigma-sandy.vercel.app/api';
 
 let currentSearchController = null; // Used to cancel rapid sequential requests
 
