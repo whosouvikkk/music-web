@@ -3,167 +3,218 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Aura | Premium Music</title>
+    <title>MoonWitch Music | Premium Streaming</title>
+    <meta name="description" content="Premium dark-luxury music streaming experience by MoonWitch Music.">
     
-    <!-- Google Fonts -->
+    <!-- Fonts: Outfit for display, Inter for body -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
     
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-
-    <link rel="stylesheet" href="style.css">
+    <!-- Icons: Material Symbols Rounded -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,1,0" />
+    
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div id="app">
-        <!-- Sidebar Navigation -->
-        <nav class="sidebar">
+
+    <!-- App Container -->
+    <div class="app-container">
+        
+        <!-- Sidebar (Desktop) -->
+        <aside class="sidebar">
             <div class="logo">
-                <i data-lucide="music-4" class="accent-icon"></i>
-                <span>Aura</span>
+                <span class="material-symbols-rounded logo-icon">nightlight</span>
+                <h1>MoonWitch</h1>
             </div>
-            
-            <ul class="nav-links">
-                <li class="active" data-view="home">
-                    <i data-lucide="home"></i>
-                    <span>Home</span>
-                </li>
-                <li data-view="search">
-                    <i data-lucide="search"></i>
-                    <span>Search</span>
-                </li>
-                <li data-view="library">
-                    <i data-lucide="library"></i>
-                    <span>Library</span>
-                </li>
-            </ul>
+
+            <nav class="nav-menu">
+                <a href="#" class="nav-item active" data-target="home">
+                    <span class="material-symbols-rounded">home</span>
+                    Home
+                </a>
+                <a href="#" class="nav-item" data-target="search">
+                    <span class="material-symbols-rounded">search</span>
+                    Search
+                </a>
+                <a href="#" class="nav-item" data-target="library">
+                    <span class="material-symbols-rounded">library_music</span>
+                    Library
+                </a>
+            </nav>
 
             <div class="sidebar-divider"></div>
 
-            <ul class="nav-links secondary-links">
-                <li>
-                    <i data-lucide="heart"></i>
-                    <span>Favorites</span>
-                </li>
-                <li>
-                    <i data-lucide="list-music"></i>
-                    <span>Queue</span>
-                </li>
-            </ul>
-        </nav>
+            <nav class="nav-menu">
+                <a href="#" class="nav-item" data-target="favorites">
+                    <span class="material-symbols-rounded">favorite</span>
+                    Favorites
+                </a>
+                <a href="#" class="nav-item" data-target="recent">
+                    <span class="material-symbols-rounded">history</span>
+                    Recently Played
+                </a>
+            </nav>
+        </aside>
 
-        <!-- Main Content Area -->
+        <!-- Main Content -->
         <main class="main-content">
-            <!-- Header -->
-            <header class="topbar">
-                <div class="nav-controls">
-                    <button class="icon-btn"><i data-lucide="chevron-left"></i></button>
-                    <button class="icon-btn"><i data-lucide="chevron-right"></i></button>
+            
+            <!-- Header / Search Bar -->
+            <header class="top-header">
+                <div class="search-container">
+                    <span class="material-symbols-rounded search-icon">search</span>
+                    <input type="text" id="searchInput" placeholder="Search for songs, artists, or albums..." autocomplete="off">
+                    <div class="search-spinner" id="searchSpinner"></div>
                 </div>
-                
-                <div class="search-container" id="search-container" style="display: none;">
-                    <i data-lucide="search" class="search-icon"></i>
-                    <input type="text" id="search-input" placeholder="What do you want to listen to?">
-                    <div class="loader" id="search-loader" style="display: none;"></div>
-                </div>
-
                 <div class="user-profile">
-                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=AuraUser&backgroundColor=10b981" alt="Profile">
+                    <span class="material-symbols-rounded">account_circle</span>
                 </div>
             </header>
 
-            <!-- Views -->
-            <div class="views-container">
+            <!-- Scrollable Content Views -->
+            <div class="content-views">
+                
                 <!-- Home View -->
-                <section id="home-view" class="view active">
-                    <div class="hero-section glass-panel">
+                <section id="view-home" class="view active">
+                    <div class="hero-section">
                         <div class="hero-content">
-                            <span class="badge">New Release</span>
-                            <h1 class="hero-title">Experience Pure Audio.</h1>
-                            <p>Discover new tracks, artists, and albums in stunning 320kbps quality.</p>
-                            <button class="btn-primary" id="explore-btn">Explore Now</button>
+                            <span class="badge">Trending Now</span>
+                            <h2 id="hero-title">Discover the Magic of Sound</h2>
+                            <p>Immerse yourself in high-fidelity audio.</p>
+                            <button class="btn-primary" id="exploreBtn">
+                                <span class="material-symbols-rounded">play_arrow</span> Listen Now
+                            </button>
                         </div>
                     </div>
 
                     <div class="section-header">
-                        <h2>Trending Now</h2>
+                        <h3>Trending Music</h3>
                     </div>
-                    <div class="grid-container" id="trending-grid">
-                        <!-- Skeletons will be injected here -->
+                    <div class="grid-container" id="trendingGrid">
+                        <!-- Skeletons will be injected here via JS -->
                     </div>
+
+                    <div class="section-header mt-8">
+                        <h3>New Releases</h3>
+                    </div>
+                    <div class="grid-container" id="newReleasesGrid"></div>
                 </section>
 
                 <!-- Search View -->
-                <section id="search-view" class="view">
+                <section id="view-search" class="view">
                     <div class="section-header">
-                        <h2>Search Results</h2>
+                        <h3>Search Results</h3>
                     </div>
-                    <div class="grid-container" id="search-grid">
-                        <div class="empty-state">
-                            <i data-lucide="search"></i>
-                            <p>Search for songs, artists, or albums</p>
-                        </div>
+                    <div id="search-empty-state" class="empty-state">
+                        <span class="material-symbols-rounded icon-large">search</span>
+                        <p>Type above to start searching</p>
                     </div>
+                    <div class="grid-container" id="searchResultsGrid"></div>
                 </section>
-                
-                <!-- Library View -->
-                <section id="library-view" class="view">
+
+                <!-- Favorites View -->
+                <section id="view-favorites" class="view">
                     <div class="section-header">
-                        <h2>Your Favorites</h2>
+                        <h3>Your Favorites</h3>
                     </div>
-                    <div class="list-container" id="favorites-list">
-                         <!-- Favorites list injected here -->
-                    </div>
+                    <div class="grid-container" id="favoritesGrid"></div>
                 </section>
+
+                <!-- Recent View -->
+                <section id="view-recent" class="view">
+                    <div class="section-header">
+                        <h3>Recently Played</h3>
+                    </div>
+                    <div class="grid-container" id="recentGrid"></div>
+                </section>
+
             </div>
         </main>
     </div>
 
-    <!-- Bottom Player -->
-    <footer class="player">
-        <div class="player-left">
-            <div class="now-playing-cover" id="np-cover-container">
-                <img id="np-cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Cover">
-            </div>
-            <div class="now-playing-info">
-                <div class="np-title" id="np-title">No Track Selected</div>
-                <div class="np-artist" id="np-artist">-</div>
-            </div>
-            <button class="icon-btn favorite-btn" id="np-favorite"><i data-lucide="heart"></i></button>
+    <!-- Mobile Bottom Navigation -->
+    <nav class="mobile-nav">
+        <a href="#" class="mobile-nav-item active" data-target="home">
+            <span class="material-symbols-rounded">home</span>
+            <span>Home</span>
+        </a>
+        <a href="#" class="mobile-nav-item" data-target="search">
+            <span class="material-symbols-rounded">search</span>
+            <span>Search</span>
+        </a>
+        <a href="#" class="mobile-nav-item" data-target="favorites">
+            <span class="material-symbols-rounded">favorite</span>
+            <span>Favorites</span>
+        </a>
+    </nav>
+
+    <!-- Global Player -->
+    <div class="player-container">
+        <!-- Progress bar absolute top -->
+        <div class="progress-container" id="progressContainer">
+            <div class="progress-bar" id="progressBar"></div>
+            <div class="progress-thumb" id="progressThumb"></div>
         </div>
 
-        <div class="player-center">
-            <div class="player-controls">
-                <button class="icon-btn" id="btn-shuffle"><i data-lucide="shuffle"></i></button>
-                <button class="icon-btn" id="btn-prev"><i data-lucide="skip-back"></i></button>
-                <button class="play-btn" id="btn-play-pause">
-                    <i data-lucide="play" id="play-icon"></i>
+        <div class="player-content">
+            <!-- Now Playing Info -->
+            <div class="now-playing">
+                <div class="album-art" id="playerAlbumArt">
+                    <span class="material-symbols-rounded placeholder-icon">music_note</span>
+                    <img src="" alt="" id="playerCover" class="hidden">
+                </div>
+                <div class="track-info">
+                    <h4 id="playerTitle">Not Playing</h4>
+                    <p id="playerArtist">--</p>
+                </div>
+                <button class="icon-btn action-btn hidden" id="likeBtn">
+                    <span class="material-symbols-rounded">favorite</span>
                 </button>
-                <button class="icon-btn" id="btn-next"><i data-lucide="skip-forward"></i></button>
-                <button class="icon-btn" id="btn-repeat"><i data-lucide="repeat"></i></button>
             </div>
-            <div class="progress-container">
-                <span id="time-current">0:00</span>
-                <input type="range" id="seek-bar" min="0" max="100" value="0">
-                <span id="time-total">0:00</span>
+
+            <!-- Core Controls -->
+            <div class="player-controls">
+                <div class="main-controls">
+                    <button class="icon-btn" id="shuffleBtn">
+                        <span class="material-symbols-rounded">shuffle</span>
+                    </button>
+                    <button class="icon-btn" id="prevBtn">
+                        <span class="material-symbols-rounded">skip_previous</span>
+                    </button>
+                    <button class="play-pause-btn" id="playBtn">
+                        <span class="material-symbols-rounded" id="playIcon">play_arrow</span>
+                    </button>
+                    <button class="icon-btn" id="nextBtn">
+                        <span class="material-symbols-rounded">skip_next</span>
+                    </button>
+                    <button class="icon-btn" id="repeatBtn">
+                        <span class="material-symbols-rounded" id="repeatIcon">repeat</span>
+                    </button>
+                </div>
+                <div class="time-controls">
+                    <span id="currentTime">0:00</span>
+                    <span id="totalTime">0:00</span>
+                </div>
+            </div>
+
+            <!-- Extra Controls (Volume) -->
+            <div class="extra-controls">
+                <button class="icon-btn" id="muteBtn">
+                    <span class="material-symbols-rounded" id="volumeIcon">volume_up</span>
+                </button>
+                <div class="volume-container" id="volumeContainer">
+                    <div class="volume-bar" id="volumeBar"></div>
+                    <div class="volume-thumb" id="volumeThumb"></div>
+                </div>
             </div>
         </div>
+    </div>
 
-        <div class="player-right">
-            <div class="audio-wave" id="audio-wave">
-                <span></span><span></span><span></span><span></span>
-            </div>
-            <i data-lucide="volume-2" id="vol-icon"></i>
-            <input type="range" id="volume-bar" min="0" max="100" value="100">
-        </div>
-    </footer>
-
-    <!-- Toast Notification Container -->
+    <!-- Toast Notifications -->
     <div id="toast-container"></div>
 
-    <!-- Hidden Audio Element -->
-    <audio id="main-audio"></audio>
+    <audio id="audioPlayer" preload="auto"></audio>
 
     <script src="app.js"></script>
 </body>
