@@ -1,7 +1,7 @@
 /* ==========================================================================
    State & Configuration
    ========================================================================== */
-const API_BASE = '/api'; // Proxied through vercel.json
+const API_BASE = "https://saavn.sumit.co/api";
 
 let currentSearchController = null;
 
