@@ -1,23 +1,62 @@
+/* ==========================================================================
+   State & Configuration
+   ========================================================================== */
+const API_BASE = '/api'; // Proxied through vercel.json
 
-const API_BASE = 'https://jiosaavn-api-sigma-sandy.vercel.app/api';
-
-let currentSearchController = null; // Used to cancel rapid sequential requests
+let currentSearchController = null;
 
 const state = {
     queue: [],
     currentIndex: -1,
     isPlaying: false,
     isShuffle: false,
-    repeatMode: 0, // 0: none, 1: all, 2: one
-    favorites: JSON.parse(localStorage.getItem('moonwitch_favorites')) || [], // Changed branding key
-    recent: JSON.parse(localStorage.getItem('moonwitch_recent')) || [],       // Changed branding key
+    repeatMode: 0, 
+    favorites: JSON.parse(localStorage.getItem('moonwitch_favorites')) || [], 
+    recent: JSON.parse(localStorage.getItem('moonwitch_recent')) || [],       
     currentView: 'home',
     volume: 1.0,
     isMuted: false
 };
 
-// Default queries for Home Page
-const defaultQueries = ['Arijit Singh', 'The Weeknd', 'Dua Lipa', 'Imagine Dragons'];
+// Static featured songs for initial display (Zero API calls on page load)
+const FEATURED_SONGS = [
+    {
+        id: '0W6DtW_N',
+        name: 'Believer',
+        artists: { primary: [{ name: 'Imagine Dragons' }] },
+        image: [{ url: 'https://c.saavncdn.com/588/Believer-English-2017-500x500.jpg' }]
+    },
+    {
+        id: '2I3iS9Sg',
+        name: 'Blinding Lights',
+        artists: { primary: [{ name: 'The Weeknd' }] },
+        image: [{ url: 'https://c.saavncdn.com/585/After-Hours-English-2020-20200320021950-500x500.jpg' }]
+    },
+    {
+        id: 'J_X93y1S',
+        name: 'Levitating',
+        artists: { primary: [{ name: 'Dua Lipa' }] },
+        image: [{ url: 'https://c.saavncdn.com/264/Future-Nostalgia-English-2020-20200327003632-500x500.jpg' }]
+    },
+    {
+        id: '4S2L_W2R',
+        name: 'Shape of You',
+        artists: { primary: [{ name: 'Ed Sheeran' }] },
+        image: [{ url: 'https://c.saavncdn.com/078/Divide-English-2017-500x500.jpg' }]
+    },
+    {
+        id: 'v4M4H9qR',
+        name: 'Starboy',
+        artists: { primary: [{ name: 'The Weeknd' }] },
+        image: [{ url: 'https://c.saavncdn.com/832/Starboy-English-2016-500x500.jpg' }]
+    },
+    {
+        id: 'q6S4I04V',
+        name: 'Stay',
+        artists: { primary: [{ name: 'The Kid LAROI, Justin Bieber' }] },
+        image: [{ url: 'https://c.saavncdn.com/492/Stay-English-2021-20210708170243-500x500.jpg' }]
+    }
+];
 
 /* ==========================================================================
    DOM Elements
@@ -69,26 +108,10 @@ document.addEventListener('DOMContentLoaded', () => {
     setupEventListeners();
 });
 
-async function initApp() {
-    renderSkeletons(DOM.grids.trending, 6);
-    renderSkeletons(DOM.grids.newReleases, 6);
-    
-    // Load default home data
-    try {
-        const trendingRes = await fetchAPI(`/search/songs?query=Top Songs`);
-        if(trendingRes && trendingRes.data && trendingRes.data.results) {
-            renderCards(trendingRes.data.results.slice(0,6), DOM.grids.trending);
-        }
-        
-        const newRes = await fetchAPI(`/search/songs?query=Latest Hits`);
-        if(newRes && newRes.data && newRes.data.results) {
-            renderCards(newRes.data.results.slice(0,6), DOM.grids.newReleases);
-        }
-    } catch (err) {
-        showToast('Failed to load home content', 'error');
-        DOM.grids.trending.innerHTML = `<p class="text-muted">Content unavailable.</p>`;
-        DOM.grids.newReleases.innerHTML = `<p class="text-muted">Content unavailable.</p>`;
-    }
+function initApp() {
+    // Render static featured cards instantly (No API requests on load)
+    renderCards(FEATURED_SONGS, DOM.grids.trending);
+    renderCards(FEATURED_SONGS, DOM.grids.newReleases);
 
     DOM.audio.volume = state.volume;
 }
@@ -100,7 +123,6 @@ async function fetchAPI(endpoint, signal = null) {
     try {
         const response = await fetch(`${API_BASE}${endpoint}`, { signal });
         
-        // Handle Rate Limiting gracefully
         if (response.status === 429) {
             throw new Error('Rate limit reached. Please wait a few seconds.');
         }
@@ -108,9 +130,7 @@ async function fetchAPI(endpoint, signal = null) {
         if (!response.ok) throw new Error('Network response was not ok');
         return await response.json();
     } catch (error) {
-        // Ignore aborted requests (happens during live typing)
         if (error.name === 'AbortError') return null; 
-        
         console.error('API Error:', error);
         throw error;
     }
@@ -130,7 +150,6 @@ function renderSkeletons(container, count) {
 }
 
 function createSongCard(song) {
-    // Extract highest quality image
     const image = song.image && song.image.length > 0 
         ? song.image[song.image.length - 1].url 
         : 'https://via.placeholder.com/150';
@@ -153,7 +172,6 @@ function createSongCard(song) {
         </div>
     `;
 
-    // Click handler to play
     card.addEventListener('click', () => {
         handlePlayContext(song);
     });
@@ -216,6 +234,7 @@ async function handlePlayContext(song) {
         showToast('Loading track...', 'info');
         
         let trackData = song;
+        // Fetch audio stream URL on click if not present
         if (!song.downloadUrl) {
             const res = await fetchAPI(`/songs/${song.id}`);
             if (res && res.data && res.data.length > 0) {
