@@ -1,5 +1,5 @@
 
-const API_BASE = 'https://api.allorigins.win/raw?url=https://saavn.sumit.co/api';
+const API_BASE = 'https://saavn.sumit.co/api';
 
 let currentSearchController = null; // Used to cancel rapid sequential requests
 
