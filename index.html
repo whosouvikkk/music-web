@@ -2,170 +2,169 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spotify Clone</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Aura | Premium Music</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
 
     <link rel="stylesheet" href="style.css">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-
-    <link rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 </head>
-
 <body>
+    <div id="app">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <div class="logo">
+                <i data-lucide="music-4" class="accent-icon"></i>
+                <span>Aura</span>
+            </div>
+            
+            <ul class="nav-links">
+                <li class="active" data-view="home">
+                    <i data-lucide="home"></i>
+                    <span>Home</span>
+                </li>
+                <li data-view="search">
+                    <i data-lucide="search"></i>
+                    <span>Search</span>
+                </li>
+                <li data-view="library">
+                    <i data-lucide="library"></i>
+                    <span>Library</span>
+                </li>
+            </ul>
 
-<div class="sidebar">
+            <div class="sidebar-divider"></div>
 
-    <div class="logo">
-        <i class="fa-brands fa-spotify"></i>
-        <span>Spotify Clone</span>
+            <ul class="nav-links secondary-links">
+                <li>
+                    <i data-lucide="heart"></i>
+                    <span>Favorites</span>
+                </li>
+                <li>
+                    <i data-lucide="list-music"></i>
+                    <span>Queue</span>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="topbar">
+                <div class="nav-controls">
+                    <button class="icon-btn"><i data-lucide="chevron-left"></i></button>
+                    <button class="icon-btn"><i data-lucide="chevron-right"></i></button>
+                </div>
+                
+                <div class="search-container" id="search-container" style="display: none;">
+                    <i data-lucide="search" class="search-icon"></i>
+                    <input type="text" id="search-input" placeholder="What do you want to listen to?">
+                    <div class="loader" id="search-loader" style="display: none;"></div>
+                </div>
+
+                <div class="user-profile">
+                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=AuraUser&backgroundColor=10b981" alt="Profile">
+                </div>
+            </header>
+
+            <!-- Views -->
+            <div class="views-container">
+                <!-- Home View -->
+                <section id="home-view" class="view active">
+                    <div class="hero-section glass-panel">
+                        <div class="hero-content">
+                            <span class="badge">New Release</span>
+                            <h1 class="hero-title">Experience Pure Audio.</h1>
+                            <p>Discover new tracks, artists, and albums in stunning 320kbps quality.</p>
+                            <button class="btn-primary" id="explore-btn">Explore Now</button>
+                        </div>
+                    </div>
+
+                    <div class="section-header">
+                        <h2>Trending Now</h2>
+                    </div>
+                    <div class="grid-container" id="trending-grid">
+                        <!-- Skeletons will be injected here -->
+                    </div>
+                </section>
+
+                <!-- Search View -->
+                <section id="search-view" class="view">
+                    <div class="section-header">
+                        <h2>Search Results</h2>
+                    </div>
+                    <div class="grid-container" id="search-grid">
+                        <div class="empty-state">
+                            <i data-lucide="search"></i>
+                            <p>Search for songs, artists, or albums</p>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Library View -->
+                <section id="library-view" class="view">
+                    <div class="section-header">
+                        <h2>Your Favorites</h2>
+                    </div>
+                    <div class="list-container" id="favorites-list">
+                         <!-- Favorites list injected here -->
+                    </div>
+                </section>
+            </div>
+        </main>
     </div>
 
-    <div class="menu">
-
-        <button class="active">
-            <i class="fas fa-house"></i>
-            Home
-        </button>
-
-        <button>
-            <i class="fas fa-fire"></i>
-            Trending
-        </button>
-
-        <button>
-            <i class="fas fa-heart"></i>
-            Liked Songs
-        </button>
-
-        <button>
-            <i class="fas fa-list"></i>
-            Playlist
-        </button>
-
-    </div>
-
-</div>
-
-<div class="main">
-
-    <div class="topbar">
-
-        <div class="searchBox">
-
-            <i class="fas fa-search"></i>
-
-            <input
-                id="searchInput"
-                type="text"
-                placeholder="Search songs, artists, albums..."
-            >
-
+    <!-- Bottom Player -->
+    <footer class="player">
+        <div class="player-left">
+            <div class="now-playing-cover" id="np-cover-container">
+                <img id="np-cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Cover">
+            </div>
+            <div class="now-playing-info">
+                <div class="np-title" id="np-title">No Track Selected</div>
+                <div class="np-artist" id="np-artist">-</div>
+            </div>
+            <button class="icon-btn favorite-btn" id="np-favorite"><i data-lucide="heart"></i></button>
         </div>
 
-        <button id="searchBtn">
-            Search
-        </button>
-
-    </div>
-
-    <div id="results" class="results">
-
-        <div class="welcome">
-
-            <h1>Spotify Clone</h1>
-
-            <p>Search any song and play it instantly.</p>
-
+        <div class="player-center">
+            <div class="player-controls">
+                <button class="icon-btn" id="btn-shuffle"><i data-lucide="shuffle"></i></button>
+                <button class="icon-btn" id="btn-prev"><i data-lucide="skip-back"></i></button>
+                <button class="play-btn" id="btn-play-pause">
+                    <i data-lucide="play" id="play-icon"></i>
+                </button>
+                <button class="icon-btn" id="btn-next"><i data-lucide="skip-forward"></i></button>
+                <button class="icon-btn" id="btn-repeat"><i data-lucide="repeat"></i></button>
+            </div>
+            <div class="progress-container">
+                <span id="time-current">0:00</span>
+                <input type="range" id="seek-bar" min="0" max="100" value="0">
+                <span id="time-total">0:00</span>
+            </div>
         </div>
 
-    </div>
-
-</div>
-
-<!-- Bottom Player -->
-
-<div class="player">
-
-    <div class="songInfo">
-
-        <img
-            id="cover"
-            src="https://placehold.co/60x60"
-        >
-
-        <div>
-
-            <h3 id="songTitle">
-                No Song Playing
-            </h3>
-
-            <p id="artist">
-                —
-            </p>
-
+        <div class="player-right">
+            <div class="audio-wave" id="audio-wave">
+                <span></span><span></span><span></span><span></span>
+            </div>
+            <i data-lucide="volume-2" id="vol-icon"></i>
+            <input type="range" id="volume-bar" min="0" max="100" value="100">
         </div>
+    </footer>
 
-    </div>
+    <!-- Toast Notification Container -->
+    <div id="toast-container"></div>
 
-    <div class="controls">
+    <!-- Hidden Audio Element -->
+    <audio id="main-audio"></audio>
 
-        <button id="prevBtn">
-            <i class="fas fa-backward-step"></i>
-        </button>
-
-        <button id="playPauseBtn">
-            <i class="fas fa-play"></i>
-        </button>
-
-        <button id="nextBtn">
-            <i class="fas fa-forward-step"></i>
-        </button>
-
-    </div>
-
-    <div class="progressSection">
-
-        <span id="currentTime">
-            0:00
-        </span>
-
-        <input
-            id="progress"
-            type="range"
-            min="0"
-            max="100"
-            value="0"
-        >
-
-        <span id="duration">
-            0:00
-        </span>
-
-    </div>
-
-    <div class="volumeSection">
-
-        <i class="fas fa-volume-high"></i>
-
-        <input
-            id="volume"
-            type="range"
-            min="0"
-            max="1"
-            step="0.01"
-            value="1"
-        >
-
-    </div>
-
-</div>
-
-<audio id="audio"></audio>
-
-<script src="script.js"></script>
-
+    <script src="app.js"></script>
 </body>
 </html>
