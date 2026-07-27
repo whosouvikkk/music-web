@@ -1,7 +1,5 @@
-/* ==========================================================================
-   State & Configuration
-   ========================================================================== */
-const API_BASE = '/api';
+
+const API_BASE = 'https://api.allorigins.win/raw?url=https://saavn.sumit.co/api';
 
 let currentSearchController = null; // Used to cancel rapid sequential requests
 
