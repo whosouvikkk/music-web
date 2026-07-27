@@ -1,36 +1,171 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jamendo Player</title>
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spotify Clone</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 </head>
+
 <body>
+
 <div class="sidebar">
-  <h2>🎵 Jamendo</h2>
-  <button id="homeBtn">Home</button>
-  <button id="likedBtn">Liked</button>
+
+    <div class="logo">
+        <i class="fa-brands fa-spotify"></i>
+        <span>Spotify Clone</span>
+    </div>
+
+    <div class="menu">
+
+        <button class="active">
+            <i class="fas fa-house"></i>
+            Home
+        </button>
+
+        <button>
+            <i class="fas fa-fire"></i>
+            Trending
+        </button>
+
+        <button>
+            <i class="fas fa-heart"></i>
+            Liked Songs
+        </button>
+
+        <button>
+            <i class="fas fa-list"></i>
+            Playlist
+        </button>
+
+    </div>
+
 </div>
 
 <div class="main">
-  <header>
-    <input id="searchInput" placeholder="Search songs...">
-    <button id="searchBtn">Search</button>
-  </header>
 
-  <div id="results" class="results"></div>
+    <div class="topbar">
+
+        <div class="searchBox">
+
+            <i class="fas fa-search"></i>
+
+            <input
+                id="searchInput"
+                type="text"
+                placeholder="Search songs, artists, albums..."
+            >
+
+        </div>
+
+        <button id="searchBtn">
+            Search
+        </button>
+
+    </div>
+
+    <div id="results" class="results">
+
+        <div class="welcome">
+
+            <h1>Spotify Clone</h1>
+
+            <p>Search any song and play it instantly.</p>
+
+        </div>
+
+    </div>
+
 </div>
+
+<!-- Bottom Player -->
 
 <div class="player">
-  <img id="cover" src="" alt="">
-  <div class="meta">
-    <div id="songTitle">Nothing Playing</div>
-    <div id="artist">-</div>
-  </div>
-  <audio id="audio" controls></audio>
+
+    <div class="songInfo">
+
+        <img
+            id="cover"
+            src="https://placehold.co/60x60"
+        >
+
+        <div>
+
+            <h3 id="songTitle">
+                No Song Playing
+            </h3>
+
+            <p id="artist">
+                —
+            </p>
+
+        </div>
+
+    </div>
+
+    <div class="controls">
+
+        <button id="prevBtn">
+            <i class="fas fa-backward-step"></i>
+        </button>
+
+        <button id="playPauseBtn">
+            <i class="fas fa-play"></i>
+        </button>
+
+        <button id="nextBtn">
+            <i class="fas fa-forward-step"></i>
+        </button>
+
+    </div>
+
+    <div class="progressSection">
+
+        <span id="currentTime">
+            0:00
+        </span>
+
+        <input
+            id="progress"
+            type="range"
+            min="0"
+            max="100"
+            value="0"
+        >
+
+        <span id="duration">
+            0:00
+        </span>
+
+    </div>
+
+    <div class="volumeSection">
+
+        <i class="fas fa-volume-high"></i>
+
+        <input
+            id="volume"
+            type="range"
+            min="0"
+            max="1"
+            step="0.01"
+            value="1"
+        >
+
+    </div>
+
 </div>
 
+<audio id="audio"></audio>
+
 <script src="script.js"></script>
+
 </body>
 </html>
