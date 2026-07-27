@@ -1,7 +1,7 @@
 /* ==========================================================================
    State & Configuration
    ========================================================================== */
-const API_BASE = '/api'; // Proxied through vercel.json to bypass CORS
+const API_BASE = 'https://saavn.sumit.co/api';
 
 let currentSearchController = null; // Used to cancel rapid sequential requests
 
